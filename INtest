@@ -156,7 +156,7 @@ def INtest(n,r):
     testn = n+1
     reps = r
     allrms = []
-    X,Y,label = imp.FullImport(1)
+    X,Y,label = imp.FullImport()
     X = normalizeData(X)
     for n in range(testn):
         loNrms = []
