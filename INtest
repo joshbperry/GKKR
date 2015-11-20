@@ -16,7 +16,6 @@ FOLDS = 5
 NPTS = 25
 
 
-
 def MethodSelect(Xt,XT,Yt,YT):
     return FitGKRR(Xt,XT,Yt,YT)
 
