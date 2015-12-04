@@ -10,12 +10,12 @@ from sklearn.metrics import mean_squared_error
 GSFOLDS = 3
 FOLDS = 5
 NPTS = 25
-FILENAME = "test.txt"   ##If importing a File with a Descriptor order the
-                        ##name of the file goes here
+FILENAME = "test.txt"   #If importing a File with a Descriptor order the
+                        # name of the file goes here
 
 
 #Method select calls The GKRR methods. To use a different machine learning tool
-#in place of GKRR, returning the RMS from MethodSelect
+# in place of GKRR, returning the RMS from MethodSelect
 def MethodSelect(TestSet,Y,f):
     return SplitFitGKRR(TestSet,Y,f)
 
@@ -44,7 +44,7 @@ def setBestParameters(L,ker=0,npts=NPTS,f=GSFOLDS):
 #--------Descriptor Methods---------#
 
 #Finds the nth descriptor, if a array of descriptor names is passed, returns
-#the name as well
+# the name as well
 def GODesc(X,n,label=None):
     if label != None:
         L = label[0][n]
@@ -86,8 +86,7 @@ def DescrNeeds(Limit, i = 50, F=False,n=1):
 
     #Completes when reacing the Limit specified or the has added in all
     #Descriptors, whichever comes first
-    while((n =< Limit)&(n <= Total)):   
-        ##print("n is "+str(n))
+    while((n =< Limit)&(n <= Total)):
         TestSet = []
         setRMS = []
 
@@ -97,26 +96,22 @@ def DescrNeeds(Limit, i = 50, F=False,n=1):
             for t in range(n):
                 Desct,_ = GODesc(X,D[t])
                 TestSet.append(Desct)
-                ##print("The Descriptor added: "+ str(L[0][int(D[t])]))
 
              #Otherwise Descriptors added in order from file               
         else:           
             for t in range(n):
                 Desct,_ = GODesc(X,t)
                 TestSet.append(Desct)
-                ##print("The Descriptor added: "+ str(L[0][t]))
         TestSet = np.swapaxes(np.array(TestSet),0,1)
 
 
-        ##Tests the limitted number of Descriptors i times and computes the
-        ##average RMS
+        #Tests the limitted number of Descriptors i times and computes the
+        # average RMS
         for t in range(i):  
             rms = MethodSelect(TestSet,Y,0.2)
             setRMS.append(rms)
-            print("The RMS added is "+str(rms))
         aveRMS.append(np.mean(setRMS))
         n += 1
-        print()
 
     #Resulst are ouput
     print(" Format: (# of Descr, RMS error) ")
