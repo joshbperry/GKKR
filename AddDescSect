@@ -8,9 +8,7 @@ from sklearn import cross_validation
 from sklearn.cross_validation import train_test_split
 from sklearn.metrics import mean_squared_error
 
-GSFOLDS = 3
-FOLDS = 5
-NPTS = 25
+
 FILENAME = "test.txt"   #If importing a File with a Descriptor order the
                         # name of the file goes here
 
@@ -33,12 +31,12 @@ def SplitFitGKRR(X,Y,n):
     regr.fit(Xt,Yt)
     return GetRMSE(YT,GetPrediction(XT,regr))
 
-def setBestParameters(L,ker=0,npts=NPTS,f=GSFOLDS):
-    if f > L:
-        f = L-2
-    return GridSearchCV(KernelRidge(kernel='rbf'), cv=f,
+def setBestParameters(length,npts=25,numfolds=3):
+    if numfolds > length:
+        numfolds = length-2
+    return GridSearchCV(KernelRidge(kernel='rbf'),
                           param_grid={"alpha": np.logspace(-6,3,npts),
-                                      "gamma": np.logspace(-10,0,npts)})
+                                      "gamma": np.logspace(-10,0,npts)}, cv=numfolds)
 
 ##--------GKRR METHODS---------#
 
