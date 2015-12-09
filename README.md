@@ -28,3 +28,6 @@ Impurity Needs Test without Graphing just printing out results Useful if INtest 
 
 INTest (Impurity Needs Test):
 Basic INTest file. 
+
+SimpleGKRR:
+A simple GKRR code that takes 3 arguments, Descriptor Data (X) , Target Values (Y), and a number of iterations(I). A good place to start when learning to code GKRR with out all the additional aspects of the more complicated code like CVTest.
