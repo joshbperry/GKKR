@@ -20,6 +20,9 @@ FitImport:
 Import Method used for all GKRR Files. Asks what file to import and looks in current folder for file that is specified. Should work on any any data file that has purely numeric data and any labels are all in rows and columns before the data.
 NOTE: If trying to use this method for a different data set (Not diffusion) comment out/remove the call to getLabels(allData). That is designed specifically for the Diffusion dataset.
 
+FWS (Forward Selection Code):
+Performs Forward Selection. Testing all Descriptors individually, adding in the best one to a best descriptor list. Then it tests all remaining Descriptors adding the one that increases the RMS by the most to the list, iteratively until a target number of Descriptors are found or no more descriptors remain untested.
+
 INPlot (Impurity Needs Plotter): 
 Plots data from a txt file for the INTest graph. After using INTest-G to get the data, and changing the formatting slightly, this file will quickly plot the data in the standard INTest format
 
