@@ -10,8 +10,6 @@ from sklearn.cross_validation import train_test_split
 from sklearn import metrics
 from sklearn.metrics import mean_squared_error
 
-GSFOLDS = 3
-NPTS = 25
 error = 0.5
 
 #Normalize input data
@@ -26,39 +24,36 @@ def normalizeData(X):
 
 
 #Set the grid over which the GKRR is performed
-def setBestParameters(L,ker=0,npts=NPTS,f=GSFOLDS):
+def setBestParameters(L,ker=0,npts=25,f=3):
     if f > L:
         f = L-2
-    return GridSearchCV(KernelRidge(kernel='rbf'), cv=f,
+    return GridSearchCV(KernelRidge(kernel='rbf'),
                           param_grid={"alpha": np.logspace(-6,3,npts),
-                                      "gamma": np.logspace(-10,0,npts)})
+                                      "gamma": np.logspace(-10,0,npts)}, cv=f)
 
 # Several methods for Calculating and printing the error in predictions
-def GetErrorInY(Y,YP,p=1):
+def GetErrorInY(Y,YP,p=True):
     Yer = Y-YP
     Yme = np.mean(abs(Yer))
     Yma = max(abs(Yer))
     Ymi = min(abs(Yer))
-    if p == 1:
+    if p == True:
         print("The mean error in Y:    ",Yme)
         print("The max error in Y:     ",str(float(Yma)))
         print("The min error in Y:     ",str(float(Ymi)))
     return Yer, Yme, Yma, Ymi
 
-def GetPrediction(X,regr):
-    return regr.predict(X)
-
 def GetRMSE(Y,YP):
     return sqrt(mean_squared_error(Y,YP))
 
 def GetAllPredictions(X,Xt,XT,regr):
-    return GetPrediction(X,regr), GetPrediction(Xt,regr), GetPrediction(XT,regr)
+    return regr.predict(X), regr.predict(Xt), regr.predict(XT)
 
 
 ##Create a Model and get RMS and predictions
 def createModelAllData(regr,X,Y):
     regr.fit(X,Y)
-    YP = GetPrediction(X,regr)
+    YP = regr.predict(X)
     rms = GetRMSE(Y,YP)
     return regr,YP,rms
 
@@ -173,7 +168,7 @@ def OfficialTest(I=50,npts=25, s=1):
             regr.fit(Xt,Yt)
             YTP = regr.predict(XT)
             rms = sqrt(mean_squared_error(YT,YTP))
-            _,_,ymax,_ = GetErrorInY(YT,YTP,0)
+            _,_,ymax,_ = GetErrorInY(YT,YTP,False)
             ##GKRR-specific Code Ends Here
             
             AllMse.append(rms)
@@ -229,4 +224,4 @@ def OfficialTest(I=50,npts=25, s=1):
 
 #The input variable is the number of iterations to run (usually 200)
 if __name__ == '__main__':
-    OfficialTest(200); 
+    OfficialTest(50); 
