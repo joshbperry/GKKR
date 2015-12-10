@@ -132,6 +132,9 @@ def INPlot():
     niaverms = data[3]
     pdaverms = data[4]
     ptaverms = data[5]
+    
+    ##Changes start here (12/10/15)
+    
     allstd = data[6]
     alstd = data[7]
     custd = data[8]
