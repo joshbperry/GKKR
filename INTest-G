@@ -149,13 +149,6 @@ def INtest(n,r):
         pdstd.append(np.std(allrms[n][3*reps:4*reps]))
         ptaverms.append(np.mean(allrms[n][4*reps:5*reps]))
         ptstd.append(np.std(allrms[n][4*reps:5*reps]))
-    x = np.arange(0,testn,1)
-    SetRowColumn(1,1)
-    LON(x,allaverms,alaverms,cuaverms,niaverms,pdaverms,ptaverms,
-        allstd,alstd,custd,nistd,pdstd,ptstd)
-    setAxes(x,list([max(allaverms),min(allaverms)]),
-            "Average RMS vs Impurities Trained On",
-            "Number Of Impurities Trained on","RMS")
     print()
     print("Tested Elements: ",testel,
           "\nHighest Number of Impurities Included: ",testn-1,
