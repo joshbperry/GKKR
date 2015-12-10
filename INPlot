@@ -16,12 +16,20 @@ from sklearn.metrics import mean_squared_error
 ##  Cu
 ##  ##,##,##
 ##  ...
+##  AvgSD
+##  ##,##,##
+##  ALSD
+##  ##,##,##
+##  ...
 ##
 ##  Where each row is a label with the row following it a series of #'s that
 ##  correspond to the rms average value found for the remaining impurities when
 ##  increasing humber of host-impurity pairs are placed into the training set.
 ##  So the first number is the average RMS with 0 impurities, followed by
 ##  average rms with 1 impurity and so on.
+##  Immediately following the last RMS values the same pattern is followed with
+##  the data's standard devitaion values in the same order as the rms.
+##
 ##  Note: All rows of numbers must include the same number of values and each
 ##  each row must have a label (or be a blank line)
 ##
@@ -52,17 +60,25 @@ def SetRowColumn(r,c):
     FIGCOL = c
     return
 
-def LON(x,ave,al,cu,ni,pd,pt):
+def LON(x,ave,al,cu,ni,pd,pt,aveSD,alSD,cuSD,niSD,pdSD,ptSD):
     M = []
     m = []
+
     for n in range(len(x)):
         M.append(max(ave[n],al[n],cu[n],ni[n],pd[n],pt[n]))
         m.append(min(ave[n],al[n],cu[n],ni[n],pd[n],pt[n]))
+   
+    plt.errorbar(x,ave,aveSD,fmt='none',ecolor='gold')
     plt.plot(x,ave,'gold',label="Average")
+    plt.errorbar(x,al,alSD,fmt='none',ecolor='r')
     plt.plot(x,al,'r',label = "Al")
+    plt.errorbar(x,cu,cuSD,fmt='none',ecolor='b')
     plt.plot(x,cu,'b',label = "Cu")
+    plt.errorbar(x,ni,niSD,fmt='none',ecolor='g')
     plt.plot(x,ni,'g',label = "Ni")
+    plt.errorbar(x,pd,pdSD,fmt='none',ecolor='orange')
     plt.plot(x,pd,'orange',label = "Pd")
+    plt.errorbar(x,pt,ptSD,fmt='none',ecolor='purple')
     plt.plot(x,pt,'purple',label = "Pt")
     plt.grid()
     setAxes(x,list([max(M),min(m)]),"Average RMS vs Impurities Trained On",
@@ -116,9 +132,16 @@ def INPlot():
     niaverms = data[3]
     pdaverms = data[4]
     ptaverms = data[5]
+    allstd = data[6]
+    alstd = data[7]
+    custd = data[8]
+    nistd = data[9]
+    pdstd = data[10]
+    ptstd = data[11]
     x = np.arange(0,len(data[0]),1)
     SetRowColumn(1,1)
-    LON(x,allaverms,alaverms,cuaverms,niaverms,pdaverms,ptaverms)
+    LON(x,allaverms,alaverms,cuaverms,niaverms,pdaverms,ptaverms,
+        allstd,alstd,custd,nistd,pdstd,ptstd)
     setAxes(x,list([max(allaverms),min(allaverms)]),
             "Average RMS vs Impurities Trained On",
             "Number Of Impurities Trained on","RMS")
