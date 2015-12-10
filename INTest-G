@@ -127,40 +127,63 @@ def INtest(n,r):
     niaverms = []
     pdaverms = []
     ptaverms = []
+    
+    #changes start here (12/10/15)
+    
+    allstd = []
+    alstd = []
+    custd = []
+    nistd = []
+    pdstd = []
+    ptstd = []
     for n in range(len(allrms)):
         allaverms.append(round(np.mean(allrms[n]),3))
+        allstd.append(round(np.std(allrms[n]),3))
         alaverms.append(np.mean(allrms[n][0:reps]))
+        alstd.append(np.std(allrms[n][0:reps]))
         cuaverms.append(np.mean(allrms[n][reps:2*reps]))
+        custd.append(np.std(allrms[n][reps:2*reps]))
         niaverms.append(np.mean(allrms[n][2*reps:3*reps]))
+        nistd.append(np.std(allrms[n][2*reps:3*reps]))
         pdaverms.append(np.mean(allrms[n][3*reps:4*reps]))
+        pdstd.append(np.std(allrms[n][3*reps:4*reps]))
         ptaverms.append(np.mean(allrms[n][4*reps:5*reps]))
+        ptstd.append(np.std(allrms[n][4*reps:5*reps]))
     x = np.arange(0,testn,1)
+    SetRowColumn(1,1)
+    LON(x,allaverms,alaverms,cuaverms,niaverms,pdaverms,ptaverms,
+        allstd,alstd,custd,nistd,pdstd,ptstd)
+    setAxes(x,list([max(allaverms),min(allaverms)]),
+            "Average RMS vs Impurities Trained On",
+            "Number Of Impurities Trained on","RMS")
     print()
     print("Tested Elements: ",testel,
           "\nHighest Number of Impurities Included: ",testn-1,
           "\nIterations per number included per element: ",reps)
     print("\nAvg")
     for n in range(len(allaverms)):
-        print(allaverms[n])
+        print(allaverms[n]," ± ",allstd[n])
     print("\nAl")
     for n in range(len(allaverms)):
-        print(alaverms[n])
+        print(alaverms[n]," ± ",alstd[n])
     print("\nCu")
     for n in range(len(allaverms)):
-        print(cuaverms[n])
+        print(cuaverms[n]," ± ",custd[n])
     print("\nNi")
     for n in range(len(allaverms)):
-        print(niaverms[n])
+        print(niaverms[n]," ± ",nistd[n])
     print("\nPd")
     for n in range(len(allaverms)):
-        print(pdaverms[n])
+        print(pdaverms[n]," ± ",pdstd[n])
     print("\nPt")
     for n in range(len(allaverms)):
-        print(ptaverms[n])
+        print(ptaverms[n]," ± ",ptstd[n])
+    plt.show()    
 
 
 # n = Highest number of Host-Impuirties to include (9 in official test)
 # r = iterations per Host per impurities included (50 in official test)
 
 if __name__ == '__main__':
-    INtest(9,1)
+    INtest(5,5)
+
