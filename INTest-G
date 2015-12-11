@@ -1,3 +1,4 @@
+from __future__ import print_function
 import FitImport as imp
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,9 +12,6 @@ from sklearn.metrics import mean_squared_error
 FIGROW = 1
 FIGCOL = 2
 error = 0.5
-GSFOLDS = 3
-FOLDS = 5
-NPTS = 25
 
 
 def MethodSelect(Xt,XT,Yt,YT):
@@ -32,7 +30,7 @@ def FitGKRR(Xt,XT,Yt,YT):
     regr.fit(Xt,Yt)
     return GetRMSE(YT,GetPrediction(XT,regr))
 
-def setBestParameters(L,ker=0,npts=NPTS,f=GSFOLDS):
+def setBestParameters(L,ker=0,npts=25,f=3):
     if f > L:
         f = L-2
     return GridSearchCV(KernelRidge(kernel='rbf'), cv=f,
@@ -155,22 +153,43 @@ def INtest(n,r):
           "\nIterations per number included per element: ",reps)
     print("\nAvg")
     for n in range(len(allaverms)):
-        print(allaverms[n]," ± ",allstd[n])
+        print(str(allaverms[n])+",",end="")
     print("\nAl")
     for n in range(len(allaverms)):
-        print(alaverms[n]," ± ",alstd[n])
+        print(str(alaverms[n])+",",end="")
     print("\nCu")
     for n in range(len(allaverms)):
-        print(cuaverms[n]," ± ",custd[n])
+        print(str(cuaverms[n])+",",end="")
     print("\nNi")
     for n in range(len(allaverms)):
-        print(niaverms[n]," ± ",nistd[n])
+        print(str(niaverms[n])+",",end="")
     print("\nPd")
     for n in range(len(allaverms)):
-        print(pdaverms[n]," ± ",pdstd[n])
+        print(str(pdaverms[n])+",",end="")
     print("\nPt")
     for n in range(len(allaverms)):
-        print(ptaverms[n]," ± ",ptstd[n])
+        print(str(ptaverms[n])+",",end="")
+
+    print("\nAll")       
+    for n in range(len(allstd)):
+        print(str(allstd[n])+",",end="")
+    print("\nAl") 
+    for n in range(len(alstd)):
+        print(str(alstd[n])+",",end="")
+    print("\nCu") 
+    for n in range(len(custd)):
+        print(str(custd[n])+",",end="")
+    print("\nNi") 
+    for n in range(len(nistd)):
+        print(str(nistd[n])+",",end="")
+    print("\nPd") 
+    for n in range(len(pdstd)):
+        print(str(pdstd[n])+",",end="")
+    print("\nPt") 
+    for n in range(len(ptstd)):
+        print(str(ptstd[n])+",",end="")
+
+
     plt.show()    
 
 
@@ -178,5 +197,5 @@ def INtest(n,r):
 # r = iterations per Host per impurities included (50 in official test)
 
 if __name__ == '__main__':
-    INtest(5,5)
+    INtest(9.50)
 
