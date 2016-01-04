@@ -1,6 +1,6 @@
 # GKKR
 Codes related to running Gaussian Kernel Ridge Regression
--Most codes have a MethodSelect function or the place where the GKRR codes is is marked to allow them to be adapted to different learning methods. The main function for the program is always the last method in the file. Throughout all the files: 
+-For most codes the FitImport.oy file is also needed because it imports the data as needed. Most codes also have a MethodSelect function or the place where the GKRR codes is is marked to allow them to be adapted to different learning methods. The main function for the program is always the last method in the file. Throughout all the files: 
 Xt = training descriptor values, XT = testing descriptor values, Yt = training target values, YT = testing target values
 
 Codes
