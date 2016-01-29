@@ -1,0 +1,53 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import datasets, linear_model
+from sklearn.kernel_ridge import KernelRidge
+from matplotlib.ticker import MultipleLocator
+from sklearn.cross_validation import train_test_split
+
+f = open("Reaserch_DataCSV.csv")
+f.readline()
+#data = np.loadtxt(f)
+
+data =  np.loadtxt(f, delimiter = ',')
+
+dataTemp = data[:, np.newaxis]
+XCu = (dataTemp[:, :, 33])
+XNi = (dataTemp[:, :, 34])
+XMn = (dataTemp[:, :, 35])
+XP  = (dataTemp[:, :, 36])
+XSi = (dataTemp[:, :, 37])
+XC  = (dataTemp[:, :, 38])
+XFl = (dataTemp[:, :, 39])
+XFx = (dataTemp[:, :, 40])
+XT  = (dataTemp[:, :, 41])
+Ydata = (dataTemp[:, :, 9])
+Xdata = np.concatenate((XCu, XNi, XMn, XP, XSi, XC, XFl, XFx, XT), axis=1)
+
+a= .005
+y= 15
+
+ridge = KernelRidge(alpha= a, coef0=1, degree=3, gamma=y, kernel='rbf', kernel_params=None)
+
+RMS_List = []
+for n in range(200):
+    
+    #split into testing and training sets
+    X_train, X_test, Y_train, Y_test = train_test_split(Xdata, Ydata, test_size=0.2)
+    #train on training sets
+    ridge.fit(X_train, Y_train)
+    
+    #calculate rms
+    rms = np.sqrt(np.mean((ridge.predict(X_test) - Y_test) ** 2))
+    RMS_List.append(rms)
+
+maxRMS = np.amax(RMS_List)
+minRMS = np.amin(RMS_List)
+avgRMS = np.mean(RMS_List)
+medRMS = np.median(RMS_List)
+sd = np.sqrt(np.mean((RMS_List - np.mean(RMS_List)) ** 2))
+
+print(maxRMS, minRMS, avgRMS, medRMS)
+print(sd)
+    
+f.close()
